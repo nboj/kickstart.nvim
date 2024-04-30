@@ -111,10 +111,10 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+--vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+--vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+--vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+--vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -153,6 +153,59 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local harpoon = require 'harpoon'
+
+      harpoon:setup()
+
+      vim.keymap.set('n', '<C-e>', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+
+      vim.keymap.set('n', '<C-l>', function()
+        harpoon:list():select(1)
+      end)
+      vim.keymap.set('n', '<C-j>', function()
+        harpoon:list():select(2)
+      end)
+      vim.keymap.set('n', '<C-h>', function()
+        harpoon:list():select(3)
+      end)
+      vim.keymap.set('n', '<C-k>', function()
+        harpoon:list():select(4)
+      end)
+
+      vim.keymap.set('n', '<leader>al', function()
+        local item = harpoon:list():add()
+        item:replace_at(1)
+      end)
+      vim.keymap.set('n', '<leader>aj', function()
+        local item = harpoon:list():add()
+        item:replace_at(2)
+      end)
+      vim.keymap.set('n', '<leader>ah', function()
+        local item = harpoon:list():add()
+        item:replace_at(3)
+      end)
+      vim.keymap.set('n', '<leader>ak', function()
+        local item = harpoon:list():add()
+        item:replace_at(4)
+      end)
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      --vim.keymap.set('n', '<C-S-J>', function()
+      -- harpoon:list():prev()
+      --end)
+      --vim.keymap.set('n', '<C-S-K>', function()
+      -- harpoon:list():next()
+      --end)
+    end,
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -291,6 +344,33 @@ require('lazy').setup({
           },
         },
       }
+
+      local harpoon = require 'harpoon'
+      harpoon:setup {}
+
+      -- basic telescope configuration
+      local conf = require('telescope.config').values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+
+        require('telescope.pickers')
+          .new({}, {
+            prompt_title = 'Harpoon',
+            finder = require('telescope.finders').new_table {
+              results = file_paths,
+            },
+            previewer = conf.file_previewer {},
+            sorter = conf.generic_sorter {},
+          })
+          :find()
+      end
+
+      vim.keymap.set('n', '<C-e>', function()
+        toggle_telescope(harpoon:list())
+      end, { desc = 'Open harpoon window' })
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
@@ -719,16 +799,16 @@ require('lazy').setup({
           --
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            end
-          end, { 'i', 's' }),
+          --['<C-l>'] = cmp.mapping(function()
+          --if luasnip.expand_or_locally_jumpable() then
+          --  luasnip.expand_or_jump()
+          -- end
+          --end, { 'i', 's' }),
+          --['<C-h>'] = cmp.mapping(function()
+          -- if luasnip.locally_jumpable(-1) then
+          --  luasnip.jump(-1)
+          -- end
+          --end, { 'i', 's' }),
 
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
