@@ -1,5 +1,5 @@
--- Set <space> as the leader key
 -- See `:help mapleader`
+-- Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -76,6 +76,7 @@ vim.opt.scrolloff = 10
 -- Relative Line Numbers
 vim.opt.relativenumber = true
 
+vim.opt.guicursor = 'n-v-c-i:block'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -574,7 +575,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
