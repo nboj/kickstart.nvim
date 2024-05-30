@@ -73,7 +73,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- Relative Line Numbers
+-- relative line numbers
 vim.opt.relativenumber = true
 
 vim.opt.guicursor = 'n-v-c-i:block'
@@ -904,7 +904,12 @@ require('lazy').setup({
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
+    config = function()
+      require('tokyonight').setup {
+        transparent = true,
+      }
+    end,
+    init = function(tokyonight)
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
