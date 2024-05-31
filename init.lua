@@ -1,3 +1,5 @@
+vim.g.python3_host_prog = '/usr/bin/python3.10'
+
 -- See `:help mapleader`
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -207,7 +209,23 @@ require('lazy').setup({
       --end)
     end,
   },
-
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {
+      workspaces = {
+        {
+          name = 'Obsidian Vault',
+          path = '~/Obsidian Vault/',
+        },
+      },
+    },
+  },
   {
     'nvim-tree/nvim-web-devicons',
     config = function()
