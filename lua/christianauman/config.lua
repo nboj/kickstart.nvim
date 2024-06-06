@@ -1,3 +1,10 @@
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+vim.g.python3_host_prog = '/usr/bin/python3.10'
+--vim.g.python3_host_prog = '/home/christianauman/GitHub/kent-SURE-research/daam/env/bin/python'
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
