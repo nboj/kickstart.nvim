@@ -84,3 +84,10 @@ vim.opt.guicursor = 'n-v-c-i:block'
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = '*.tpp',
+  callback = function()
+    vim.bo.filetype = 'cpp'
+  end,
+})

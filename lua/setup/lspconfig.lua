@@ -174,7 +174,9 @@ return { -- LSP Configuration & Plugins
       --
       cssls = {},
       ast_grep = {},
-      clangd = {},
+      clangd = {
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'tpp' },
+      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
