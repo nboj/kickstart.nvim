@@ -6,8 +6,13 @@ return {
 
     -- Only one of these is needed.
     'nvim-telescope/telescope.nvim', -- optional
-    'ibhagwan/fzf-lua', -- optional
-    'echasnovski/mini.pick', -- optional
+    --'ibhagwan/fzf-lua', -- optional
+    --'echasnovski/mini.pick', -- optional
   },
-  config = true,
+  config = function()
+    vim.keymap.set('n', '<leader>g', function()
+      local neogit = require 'neogit'
+      neogit.open()
+    end)
+  end,
 }
