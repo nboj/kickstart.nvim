@@ -5,4 +5,5 @@ return {
   require 'setup.lspconfig',
   require 'setup.theme',
   require 'setup.oil',
+  require 'setup.tstools',
 }
