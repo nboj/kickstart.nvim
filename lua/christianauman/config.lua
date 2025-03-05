@@ -1,6 +1,7 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.conceallevel = 2
 
 vim.g.python3_host_prog = '/usr/bin/python3.10'
 --vim.g.python3_host_prog = '/home/christianauman/GitHub/kent-SURE-research/daam/env/bin/python'
